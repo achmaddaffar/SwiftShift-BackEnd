@@ -4,6 +4,7 @@ import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.types.ObjectId
 
 data class Gig(
+    val title: String,
     val imageUrl: String,
     val description: String,
     val gigProviderId: String,
