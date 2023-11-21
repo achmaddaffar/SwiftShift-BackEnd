@@ -5,6 +5,8 @@ import com.swiftshift.data.repository.gig_worker.IGigWorkerRepository
 import com.swiftshift.data.request.gig_worker.CreateGigWorkerRequest
 import com.swiftshift.data.request.gig_worker.UpdateGigWorkerRequest
 import com.swiftshift.data.response.gig_worker.GigWorkerProfileResponse
+import com.swiftshift.util.Constants
+import java.util.regex.Pattern
 
 class GigWorkerService(
     private val gigWorkerRepository: IGigWorkerRepository
@@ -66,11 +68,22 @@ class GigWorkerService(
     fun validateCreateGigWorkerRequest(request: CreateGigWorkerRequest): ValidationEvent {
         if (request.email.isBlank() || request.password.isBlank() || request.fullName.isBlank())
             return ValidationEvent.ErrorFieldEmpty
+        if (!request.email.matches(Constants.EMAIL_REGEX.toRegex()))
+            return ValidationEvent.InvalidEmail
+        return ValidationEvent.Success
+    }
+
+    fun validateGigWorkerUpdateRequest(request: UpdateGigWorkerRequest): ValidationEvent {
+        if (request.email.isBlank() || request.password.isBlank() || request.fullName.isBlank())
+            return ValidationEvent.ErrorFieldEmpty
+        if (!request.email.matches(Constants.EMAIL_REGEX.toRegex()))
+            return ValidationEvent.InvalidEmail
         return ValidationEvent.Success
     }
 
     sealed class ValidationEvent {
         data object ErrorFieldEmpty : ValidationEvent()
+        data object InvalidEmail : ValidationEvent()
         data object Success : ValidationEvent()
     }
 }

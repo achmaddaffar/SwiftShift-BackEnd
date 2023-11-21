@@ -2,6 +2,7 @@ package com.swiftshift.plugins
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.swiftshift.util.Constants
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
@@ -29,7 +30,7 @@ fun Application.configureSecurity() {
 }
 
 val JWTPrincipal.gigWorkerId: String?
-    get() = getClaim("gigWorkerId", String::class)
+    get() = getClaim(Constants.JWT_CLAIM_GIG_WORKER_ID, String::class)
 
 val JWTPrincipal.gigProviderId: String?
-    get() = getClaim("gigProviderId", String::class)
+    get() = getClaim(Constants.JWT_CLAIM_GIG_PROVIDER_ID, String::class)
