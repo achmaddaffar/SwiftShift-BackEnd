@@ -9,6 +9,10 @@ object Constants {
     const val PROFILE_PICTURE_PATH = "build/resources/main/static/profile_pictures/"
     const val GIG_IMAGE_PATH = "build/resources/main/static/gig_images"
 
+    const val GIG_STATUS_PENDING = 1
+    const val GIG_STATUS_REJECTED = 2
+    const val GIG_STATUS_ACCEPTED = 3
+
     inline val String.Companion.Empty
         get() = ""
 }

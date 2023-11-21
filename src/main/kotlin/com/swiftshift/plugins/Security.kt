@@ -7,24 +7,29 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 
 fun Application.configureSecurity() {
-    // Please read the jwt property from the config file if you are using EngineMain
-    val jwtAudience = "jwt-audience"
-    val jwtDomain = "https://jwt-provider-domain/"
-    val jwtRealm = "ktor sample app"
-    val jwtSecret = "secret"
     authentication {
         jwt {
-            realm = jwtRealm
+            val jwtAudience = this@configureSecurity.environment.config.property("jwt.audience").getString()
+            realm = this@configureSecurity.environment.config.property("jwt.realm").getString()
+            val issuer = this@configureSecurity.environment.config.property("jwt.domain").getString()
             verifier(
                 JWT
-                    .require(Algorithm.HMAC256(jwtSecret))
+                    .require(Algorithm.HMAC256("secret"))
                     .withAudience(jwtAudience)
-                    .withIssuer(jwtDomain)
+                    .withIssuer(issuer)
                     .build()
             )
             validate { credential ->
-                if (credential.payload.audience.contains(jwtAudience)) JWTPrincipal(credential.payload) else null
+                if (credential.payload.audience.contains(jwtAudience))
+                    JWTPrincipal(credential.payload)
+                else null
             }
         }
     }
 }
+
+val JWTPrincipal.gigWorkerId: String?
+    get() = getClaim("gigWorkerId", String::class)
+
+val JWTPrincipal.gigProviderId: String?
+    get() = getClaim("gigProviderId", String::class)
