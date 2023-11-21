@@ -18,11 +18,10 @@ class ReviewRepository(
 
     override suspend fun reviewGigProviderIfExist(
         gigWorkerId: String,
-        gigProviderId: String,
         request: ReviewGigProviderRequest
     ): Boolean {
         val doesGigWorkerExist = gigWorkers.findOneById(gigWorkerId) != null
-        val doesGigProviderExist = gigProviders.findOneById(gigProviderId) != null
+        val doesGigProviderExist = gigProviders.findOneById(request.gigProviderId) != null
 
         if (!doesGigWorkerExist || !doesGigProviderExist)
             return false
@@ -32,7 +31,7 @@ class ReviewRepository(
                 review = request.review,
                 star = request.star,
                 gigWorkerId = gigWorkerId,
-                gigProviderId = gigProviderId,
+                gigProviderId = request.gigProviderId,
                 timestamp = System.currentTimeMillis()
             )
         ).wasAcknowledged()

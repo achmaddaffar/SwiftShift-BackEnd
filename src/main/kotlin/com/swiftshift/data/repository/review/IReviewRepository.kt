@@ -7,7 +7,6 @@ interface IReviewRepository {
 
     suspend fun reviewGigProviderIfExist(
         gigWorkerId: String,
-        gigProviderId: String,
         request: ReviewGigProviderRequest
     ): Boolean
 
