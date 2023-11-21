@@ -1,7 +1,7 @@
 package com.swiftshift.data.repository.review
 
 import com.swiftshift.data.model.Review
-import com.swiftshift.data.request.ReviewGigProviderRequest
+import com.swiftshift.data.request.review.ReviewGigProviderRequest
 
 interface IReviewRepository {
 

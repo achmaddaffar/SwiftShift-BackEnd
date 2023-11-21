@@ -2,7 +2,7 @@ package com.swiftshift.service
 
 import com.swiftshift.data.model.GigProvider
 import com.swiftshift.data.repository.gig_provider.IGigProviderRepository
-import com.swiftshift.data.request.CreateGigProviderRequest
+import com.swiftshift.data.request.gig_provider.CreateGigProviderRequest
 
 class GigProviderService(
     private val gigProviderRepository: IGigProviderRepository
@@ -20,14 +20,17 @@ class GigProviderService(
         return enteredPassword == actualPassword
     }
 
-    suspend fun createGigProvider(request: CreateGigProviderRequest): Boolean {
+    suspend fun createGigProvider(
+        request: CreateGigProviderRequest,
+        profileImageUrl: String
+    ): Boolean {
         return gigProviderRepository.createGigProvider(
             GigProvider(
                 fullName = request.fullName,
                 email = request.email,
                 password = request.password,
                 timestamp = System.currentTimeMillis(),
-                profileImageUrl = request.profileImageUrl
+                profileImageUrl = profileImageUrl
             )
         )
     }

@@ -1,6 +1,7 @@
 package com.swiftshift.data.repository.gig
 
 import com.swiftshift.data.model.Gig
+import com.swiftshift.data.response.gig.GigResponse
 import com.swiftshift.util.Constants
 
 interface IGigRepository {
@@ -16,4 +17,11 @@ interface IGigRepository {
         page: Int = 0,
         pageSize: Int = Constants.DEFAULT_GIGS_BY_PROVIDER_SIZE
     ): List<Gig>
+
+    suspend fun getNearbyGigs(
+        latitude: Long,
+        longitude: Long,
+        page: Int = 0,
+        pageSize: Int = Constants.DEFAULT_NEARBY_GIGS_PAGE_SIZE
+    ): List<GigResponse>
 }

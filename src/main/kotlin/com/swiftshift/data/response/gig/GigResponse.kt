@@ -1,9 +1,6 @@
-package com.swiftshift.data.model
+package com.swiftshift.data.response.gig
 
-import org.bson.codecs.pojo.annotations.BsonId
-import org.bson.types.ObjectId
-
-data class Gig(
+data class GigResponse(
     val title: String,
     val imageUrl: String,
     val description: String,
@@ -14,9 +11,8 @@ data class Gig(
     val currentApplier: Int,
     val deadlineDate: Long,
     val salary: Double,
-    val latitude: Long,
     val longitude: Long,
+    val latitude: Long,
     val timestamp: Long,
-    @BsonId
-    val id: String = ObjectId().toString()
+    val distance: Long
 )

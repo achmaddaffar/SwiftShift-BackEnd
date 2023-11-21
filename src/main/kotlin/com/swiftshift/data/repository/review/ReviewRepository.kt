@@ -3,7 +3,7 @@ package com.swiftshift.data.repository.review
 import com.swiftshift.data.model.GigProvider
 import com.swiftshift.data.model.GigWorker
 import com.swiftshift.data.model.Review
-import com.swiftshift.data.request.ReviewGigProviderRequest
+import com.swiftshift.data.request.review.ReviewGigProviderRequest
 import org.litote.kmongo.and
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq

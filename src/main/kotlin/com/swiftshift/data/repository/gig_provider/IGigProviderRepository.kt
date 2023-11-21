@@ -1,7 +1,7 @@
 package com.swiftshift.data.repository.gig_provider
 
 import com.swiftshift.data.model.GigProvider
-import com.swiftshift.data.request.UpdateGigProviderRequest
+import com.swiftshift.data.request.gig_provider.UpdateGigProviderRequest
 
 interface IGigProviderRepository {
 

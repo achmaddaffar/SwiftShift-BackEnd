@@ -1,4 +1,4 @@
-package com.swiftshift.data.response
+package com.swiftshift.data.response.gig_worker
 
 data class GigWorkerProfileResponse(
     val fullName: String,

@@ -2,9 +2,9 @@ package com.swiftshift.service
 
 import com.swiftshift.data.model.GigWorker
 import com.swiftshift.data.repository.gig_worker.IGigWorkerRepository
-import com.swiftshift.data.request.CreateGigWorkerRequest
-import com.swiftshift.data.request.UpdateGigWorkerRequest
-import com.swiftshift.data.response.GigWorkerProfileResponse
+import com.swiftshift.data.request.gig_worker.CreateGigWorkerRequest
+import com.swiftshift.data.request.gig_worker.UpdateGigWorkerRequest
+import com.swiftshift.data.response.gig_worker.GigWorkerProfileResponse
 
 class GigWorkerService(
     private val gigWorkerRepository: IGigWorkerRepository
@@ -48,14 +48,17 @@ class GigWorkerService(
         return enteredPassword == actualPassword
     }
 
-    suspend fun createGigWorker(request: CreateGigWorkerRequest): Boolean {
+    suspend fun createGigWorker(
+        request: CreateGigWorkerRequest,
+        profileImageUrl: String
+    ): Boolean {
         return gigWorkerRepository.createGigWorker(
             GigWorker(
                 fullName = request.fullName,
                 email = request.email,
                 password = request.password,
                 timeStamp = System.currentTimeMillis(),
-                profileImageUrl = request.profileImageUrl
+                profileImageUrl = profileImageUrl
             )
         )
     }
