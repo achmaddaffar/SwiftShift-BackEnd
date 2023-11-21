@@ -55,11 +55,20 @@ class ApplyingRepository(
         ) != null
     }
 
-    override suspend fun updateApply(applyId: String, status: Int): Boolean {
-        val apply = applying.findOneById(applyId) ?: return false
+    override suspend fun updateApply(
+        gigWorkerId: String,
+        gigId: String,
+        status: Int
+    ): Boolean {
+        val apply = applying.findOne(
+            and(
+                Applying::gigWorkerId eq gigWorkerId,
+                Applying::gigId eq gigId
+            )
+        ) ?: return false
 
         return applying.updateOneById(
-            id = applyId,
+            id = gigWorkerId,
             update = Applying(
                 gigWorkerId = apply.gigWorkerId,
                 gigId = apply.gigId,

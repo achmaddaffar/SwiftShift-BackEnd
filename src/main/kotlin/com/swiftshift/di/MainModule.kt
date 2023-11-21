@@ -14,5 +14,4 @@ val mainModule = module {
     }
 
     single { Gson() }
-
 }

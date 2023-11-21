@@ -21,5 +21,9 @@ interface IApplyingRepository {
         gigId: String
     ): Boolean
 
-    suspend fun updateApply(applyId: String, status: Int): Boolean
+    suspend fun updateApply(
+        gigWorkerId: String,
+        gigId: String,
+        status: Int
+    ): Boolean
 }
