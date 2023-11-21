@@ -38,7 +38,8 @@ class GigWorkerRepository(
                 email = request.email,
                 fullName = request.fullName,
                 password = request.password,
-                profileImageUrl = request.profileImageUrl,
+                timeStamp = System.currentTimeMillis(),
+                profileImageUrl = profileImageUrl,
                 id = gigWorker.id
             )
         ).wasAcknowledged()
