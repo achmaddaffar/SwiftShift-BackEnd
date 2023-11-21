@@ -1,8 +1,6 @@
 package com.swiftshift.data.response
 
-import com.swiftshift.util.Constants.Empty
-
-data class ProfileResponse(
+data class GigWorkerProfileResponse(
     val fullName: String,
     val profileImageUrl: String,
     val joiningDate: Long,

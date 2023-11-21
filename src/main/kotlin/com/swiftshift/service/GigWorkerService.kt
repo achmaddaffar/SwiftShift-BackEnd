@@ -4,7 +4,7 @@ import com.swiftshift.data.model.GigWorker
 import com.swiftshift.data.repository.gig_worker.IGigWorkerRepository
 import com.swiftshift.data.request.CreateGigWorkerRequest
 import com.swiftshift.data.request.UpdateGigWorkerRequest
-import com.swiftshift.data.response.ProfileResponse
+import com.swiftshift.data.response.GigWorkerProfileResponse
 
 class GigWorkerService(
     private val gigWorkerRepository: IGigWorkerRepository
@@ -14,9 +14,9 @@ class GigWorkerService(
         return gigWorkerRepository.getGigWorkerByEmail(email) != null
     }
 
-    suspend fun getGigWorkerProfile(gigWorkerId: String): ProfileResponse? {
+    suspend fun getGigWorkerProfile(gigWorkerId: String): GigWorkerProfileResponse? {
         val gigWorker = gigWorkerRepository.getGigWorkerById(gigWorkerId) ?: return null
-        return ProfileResponse(
+        return GigWorkerProfileResponse(
             fullName = gigWorker.fullName,
             profileImageUrl = gigWorker.profileImageUrl,
             joiningDate = gigWorker.timeStamp,
