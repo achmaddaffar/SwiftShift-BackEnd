@@ -38,7 +38,8 @@ fun Application.configureRouting() {
             gigWorkerService = gigWorkerService
         )
         updateGigWorkerProfile(
-            gigWorkerService = gigWorkerService
+            gigWorkerService = gigWorkerService,
+            gigProviderService = gigProviderService
         )
 
         staticResources("", "static")

@@ -9,7 +9,7 @@ data class GigProvider(
     val email: String,
     val password: String,
     val timestamp: Long,
-    val profileImageUrl: String = String.Empty,
+    val profileImageUrl: String? = null,
     val totalIncome: Double? = null,
     val gender: String? = null,
     val highestEducation: String? = null,

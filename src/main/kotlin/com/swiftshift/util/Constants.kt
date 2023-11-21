@@ -5,7 +5,7 @@ object Constants {
     const val DATABASE_NAME = "SwiftShift_Database"
     const val BASE_URL = "http://localhost:8005/"
     const val PROFILE_PICTURE_PATH = "build/resources/main/static/profile_pictures/"
-    const val GIG_IMAGE_PATH = "build/resources/main/static/gig_images"
+    const val GIG_IMAGE_PATH = "build/resources/main/static/gig_images/"
 
     const val CREATE_ACCOUNT_PART_DATA = "create_account_data"
     const val UPDATE_PROFILE_PART_DATA = "update_profile_data"

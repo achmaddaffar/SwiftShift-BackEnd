@@ -33,10 +33,12 @@ fun Route.createGigWorker(
         val multipart = call.receiveMultipart()
         var createGigWorkerRequest: CreateGigWorkerRequest? = null
         var fileName: String? = null
+        var filePath: String? = null
         multipart.forEachPart { partData ->
             when (partData) {
                 is PartData.FileItem -> {
                     fileName = partData.save(Constants.PROFILE_PICTURE_PATH)
+                    filePath = "${Constants.PROFILE_PICTURE_PATH}$fileName"
                 }
 
                 is PartData.FormItem -> {
@@ -59,6 +61,7 @@ fun Route.createGigWorker(
                     request.email
                 )
             ) {
+                filePath?.let { File(it).delete() }
                 call.respond(
                     BasicApiResponse<Unit>(
                         successful = false,
@@ -70,6 +73,7 @@ fun Route.createGigWorker(
 
             when (gigWorkerService.validateCreateGigWorkerRequest(request)) {
                 GigWorkerService.ValidationEvent.ErrorFieldEmpty -> {
+                    filePath?.let { File(it).delete() }
                     call.respond(
                         BasicApiResponse<Unit>(
                             successful = false,
@@ -79,6 +83,7 @@ fun Route.createGigWorker(
                 }
 
                 GigWorkerService.ValidationEvent.InvalidEmail -> {
+                    filePath?.let { File(it).delete() }
                     call.respond(
                         BasicApiResponse<Unit>(
                             successful = false,
@@ -103,7 +108,7 @@ fun Route.createGigWorker(
                         )
                     } else {
                         try {
-                            File(profilePictureUrl).delete()
+                            filePath?.let { File(it).delete() }
                         } finally {
                             call.respond(HttpStatusCode.InternalServerError)
                         }
@@ -219,10 +224,12 @@ fun Route.updateGigWorkerProfile(
             val multipart = call.receiveMultipart()
             var updateProfileRequest: UpdateGigWorkerRequest? = null
             var fileName: String? = null
+            var filePath: String? = null
             multipart.forEachPart { partData ->
                 when (partData) {
                     is PartData.FileItem -> {
                         fileName = partData.save(Constants.PROFILE_PICTURE_PATH)
+                        filePath = "${Constants.PROFILE_PICTURE_PATH}$fileName"
                     }
 
                     is PartData.FormItem -> {
@@ -245,6 +252,7 @@ fun Route.updateGigWorkerProfile(
                         request.email
                     )
                 ) {
+                    filePath?.let { File(it).delete() }
                     call.respond(
                         BasicApiResponse<Unit>(
                             successful = false,
@@ -256,6 +264,7 @@ fun Route.updateGigWorkerProfile(
 
                 when (gigWorkerService.validateGigWorkerUpdateRequest(request)) {
                     GigWorkerService.ValidationEvent.ErrorFieldEmpty -> {
+                        filePath?.let { File(it).delete() }
                         call.respond(
                             BasicApiResponse<Unit>(
                                 successful = false,
@@ -265,6 +274,7 @@ fun Route.updateGigWorkerProfile(
                     }
 
                     GigWorkerService.ValidationEvent.InvalidEmail -> {
+                        filePath?.let { File(it).delete() }
                         call.respond(
                             BasicApiResponse<Unit>(
                                 successful = false,
@@ -274,7 +284,8 @@ fun Route.updateGigWorkerProfile(
                     }
 
                     GigWorkerService.ValidationEvent.Success -> {
-                        val profilePictureUrl = "${Constants.BASE_URL}profile_pictures/$fileName"
+                        val profilePictureUrl =
+                            if (fileName != null) "${Constants.BASE_URL}profile_pictures/$fileName" else String.Empty
                         val updateAcknowledged = gigWorkerService.updateGigWorker(
                             gigWorkerId = call.gigWorkerId,
                             profileImageUrl = profilePictureUrl,
@@ -289,12 +300,13 @@ fun Route.updateGigWorkerProfile(
                                 )
                             )
                         } else {
-                            File(profilePictureUrl).delete()
+                            filePath?.let { File(it).delete() }
                             call.respond(HttpStatusCode.InternalServerError)
                         }
                     }
                 }
             } ?: run {
+                filePath?.let { File(it).delete() }
                 call.respond(HttpStatusCode.BadRequest)
                 return@put
             }

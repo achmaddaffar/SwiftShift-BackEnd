@@ -20,7 +20,7 @@ class GigWorkerService(
         val gigWorker = gigWorkerRepository.getGigWorkerById(gigWorkerId) ?: return null
         return GigWorkerProfileResponse(
             fullName = gigWorker.fullName,
-            profileImageUrl = gigWorker.profileImageUrl,
+            profileImageUrl = gigWorker.profileImageUrl.toString(),
             joiningDate = gigWorker.timeStamp,
             email = gigWorker.email,
             totalIncome = gigWorker.totalIncome,
