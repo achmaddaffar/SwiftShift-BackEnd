@@ -43,6 +43,7 @@ class GigProviderService(
 
     sealed class ValidationEvent {
         data object ErrorFieldEmpty : ValidationEvent()
+        data object InvalidEmail : ValidationEvent()
         data object Success : ValidationEvent()
     }
 }
