@@ -1,9 +1,6 @@
 package com.swiftshift.plugins
 
-import com.swiftshift.routes.createGigWorker
-import com.swiftshift.routes.getGigWorkerProfile
-import com.swiftshift.routes.loginGigWorker
-import com.swiftshift.routes.updateGigWorkerProfile
+import com.swiftshift.routes.*
 import com.swiftshift.service.*
 import io.ktor.server.application.*
 import io.ktor.server.http.content.*
@@ -34,13 +31,26 @@ fun Application.configureRouting() {
             jwtAudience = jwtAudience,
             jwtSecret = jwtSecret
         )
-        getGigWorkerProfile(
-            gigWorkerService = gigWorkerService
-        )
+        getGigWorkerProfile(gigWorkerService)
         updateGigWorkerProfile(
             gigWorkerService = gigWorkerService,
             gigProviderService = gigProviderService
         )
+
+        // Gig Provider
+        createGigProvider(
+            gigWorkerService = gigWorkerService,
+            gigProviderService = gigProviderService
+        )
+        loginGigProvider(
+            gigProviderService = gigProviderService,
+            jwtIssuer = jwtIssuer,
+            jwtAudience = jwtAudience,
+            jwtSecret = jwtSecret
+        )
+
+        // Gig
+        createGig(gigService)
 
         staticResources("", "static")
     }

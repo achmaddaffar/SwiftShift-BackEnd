@@ -9,6 +9,7 @@ object Constants {
 
     const val CREATE_ACCOUNT_PART_DATA = "create_account_data"
     const val UPDATE_PROFILE_PART_DATA = "update_profile_data"
+    const val CREATE_GIG_PART_DATA = "create_gig_data"
 
     const val GIG_STATUS_PENDING = 1
     const val GIG_STATUS_REJECTED = 2
