@@ -59,7 +59,8 @@ class GigRepository(
                     longitude = it.longitude,
                     latitude = it.latitude,
                     timestamp = it.timestamp,
-                    distance = distance
+                    distance = distance,
+                    id = it.id
                 )
             }
             .sortedBy { it.distance }

@@ -1,4 +1,3 @@
-
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
@@ -37,12 +36,18 @@ dependencies {
     implementation("io.ktor:ktor-server-websockets-jvm")
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("io.ktor:ktor-client-content-negotiation:2.3.6")
+    implementation("io.ktor:ktor-serialization-gson:2.3.6")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 
     // KMongo
     implementation("org.litote.kmongo:kmongo:$kmongo_version")
     implementation("org.litote.kmongo:kmongo-coroutine:$kmongo_version")
+
+    // KMongo - Test
+    implementation("org.litote.kmongo:kmongo-flapdoodle:$kmongo_version")
+    implementation("io.ktor:ktor-client-mock-jvm:2.0.0-beta-1")
 
     // Koin for Ktor
     implementation("io.insert-koin:koin-core:$koin_version")
@@ -69,4 +74,10 @@ dependencies {
     // testng
     testImplementation("org.testng:testng:7.7.0")
     implementation(kotlin("stdlib-jdk8"))
+    testImplementation("io.ktor:ktor-server-tests:$ktor_version")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
+    testImplementation("org.assertj:assertj-core:3.11.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.2")
+    testImplementation("io.mockk:mockk:1.9.3")
 }

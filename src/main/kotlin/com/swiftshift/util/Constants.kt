@@ -17,6 +17,7 @@ object Constants {
 
     const val DEFAULT_NEARBY_GIGS_PAGE_SIZE = 15
     const val DEFAULT_GIGS_BY_PROVIDER_SIZE = 15
+    const val DEFAULT_REVIEWS_TO_GIG_PROVIDER_SIZE = 15
 
     const val MAX_REVIEW_LENGTH = 2000
 

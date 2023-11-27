@@ -8,4 +8,6 @@ object ApiResponseMessages {
     const val FIELDS_BLANK = "The fields may not be empty."
     const val REVIEW_TOO_LONG = "The review length must not exceed ${Constants.MAX_REVIEW_LENGTH} characters."
     const val INVALID_EMAIL = "Please use a valid email address."
+    const val REVIEW_CREATED_SUCCESSFULLY = "Your review has been created successfully"
+
 }

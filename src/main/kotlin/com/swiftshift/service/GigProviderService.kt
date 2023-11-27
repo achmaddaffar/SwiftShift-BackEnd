@@ -3,6 +3,7 @@ package com.swiftshift.service
 import com.swiftshift.data.model.GigProvider
 import com.swiftshift.data.repository.gig_provider.IGigProviderRepository
 import com.swiftshift.data.request.gig_provider.CreateGigProviderRequest
+import com.swiftshift.util.Constants
 
 class GigProviderService(
     private val gigProviderRepository: IGigProviderRepository
@@ -14,6 +15,10 @@ class GigProviderService(
 
     suspend fun getGigProviderByEmail(email: String): GigProvider? {
         return gigProviderRepository.getGigProviderByEmail(email)
+    }
+
+    suspend fun getGigProviderById(gigProviderId: String): GigProvider? {
+        return gigProviderRepository.getGigProviderById(gigProviderId)
     }
 
     fun isValidPassword(enteredPassword: String, actualPassword: String): Boolean {
@@ -38,6 +43,8 @@ class GigProviderService(
     fun validateCreateGigProviderRequest(request: CreateGigProviderRequest): ValidationEvent {
         if (request.email.isBlank() || request.password.isBlank() || request.fullName.isBlank())
             return ValidationEvent.ErrorFieldEmpty
+        if (!request.email.matches(Constants.EMAIL_REGEX.toRegex()))
+            return ValidationEvent.InvalidEmail
         return ValidationEvent.Success
     }
 

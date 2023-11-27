@@ -12,7 +12,6 @@ import com.swiftshift.service.GigWorkerService
 import com.swiftshift.util.ApiResponseMessages
 import com.swiftshift.util.Constants
 import com.swiftshift.util.Constants.Empty
-import com.swiftshift.util.gigProviderId
 import com.swiftshift.util.save
 import io.ktor.http.*
 import io.ktor.http.content.*

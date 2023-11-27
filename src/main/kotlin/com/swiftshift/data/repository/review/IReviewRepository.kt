@@ -1,21 +1,27 @@
 package com.swiftshift.data.repository.review
 
 import com.swiftshift.data.model.Review
-import com.swiftshift.data.request.review.ReviewGigProviderRequest
+import com.swiftshift.data.request.review.CreateReviewGigProviderRequest
+import com.swiftshift.util.Constants
 
 interface IReviewRepository {
 
     suspend fun reviewGigProviderIfExist(
         gigWorkerId: String,
-        request: ReviewGigProviderRequest
+        request: CreateReviewGigProviderRequest
     ): Boolean
 
     suspend fun deleteReviewIfExist(
-        gigWorkerId: String,
-        gigProviderId: String,
+        reviewId: String
     ): Boolean
 
-    suspend fun getReviewsByGigProvider(gigProviderId: String): List<Review>
+    suspend fun getReviewById(reviewId: String): Review?
+
+    suspend fun getReviewsByGigProvider(
+        gigProviderId: String,
+        page: Int,
+        pageSize: Int = Constants.DEFAULT_REVIEWS_TO_GIG_PROVIDER_SIZE
+    ): List<Review>
 
     suspend fun doesGigWorkerReview(
         gigWorkerId: String,

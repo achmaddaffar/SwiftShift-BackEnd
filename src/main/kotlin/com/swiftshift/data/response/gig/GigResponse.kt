@@ -14,5 +14,6 @@ data class GigResponse(
     val longitude: Long,
     val latitude: Long,
     val timestamp: Long,
-    val distance: Long
+    val distance: Long,
+    val id: String
 )

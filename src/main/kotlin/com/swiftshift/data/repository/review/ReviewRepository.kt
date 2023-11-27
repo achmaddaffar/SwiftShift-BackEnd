@@ -3,7 +3,7 @@ package com.swiftshift.data.repository.review
 import com.swiftshift.data.model.GigProvider
 import com.swiftshift.data.model.GigWorker
 import com.swiftshift.data.model.Review
-import com.swiftshift.data.request.review.ReviewGigProviderRequest
+import com.swiftshift.data.request.review.CreateReviewGigProviderRequest
 import org.litote.kmongo.and
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq
@@ -18,7 +18,7 @@ class ReviewRepository(
 
     override suspend fun reviewGigProviderIfExist(
         gigWorkerId: String,
-        request: ReviewGigProviderRequest
+        request: CreateReviewGigProviderRequest
     ): Boolean {
         val doesGigWorkerExist = gigWorkers.findOneById(gigWorkerId) != null
         val doesGigProviderExist = gigProviders.findOneById(request.gigProviderId) != null
@@ -37,19 +37,26 @@ class ReviewRepository(
         ).wasAcknowledged()
     }
 
-    override suspend fun deleteReviewIfExist(gigWorkerId: String, gigProviderId: String): Boolean {
-        return reviews.deleteOne(
-            and(
-                Review::gigWorkerId eq gigWorkerId,
-                Review::gigProviderId eq gigProviderId
-            )
-        ).wasAcknowledged()
+    override suspend fun deleteReviewIfExist(reviewId: String): Boolean {
+        return reviews.deleteOne(Review::id eq reviewId).wasAcknowledged()
     }
 
-    override suspend fun getReviewsByGigProvider(gigProviderId: String): List<Review> {
+    override suspend fun getReviewById(reviewId: String): Review? {
+        return reviews.findOneById(reviewId)
+    }
+
+    override suspend fun getReviewsByGigProvider(
+        gigProviderId: String,
+        page: Int,
+        pageSize: Int
+    ): List<Review> {
         return reviews.find(
             Review::gigProviderId eq gigProviderId
-        ).toList()
+        )
+            .descendingSort(Review::timestamp)
+            .skip(page * pageSize)
+            .limit(pageSize)
+            .toList()
     }
 
     override suspend fun doesGigWorkerReview(gigWorkerId: String, gigProviderId: String): Boolean {

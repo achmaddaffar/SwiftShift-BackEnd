@@ -63,6 +63,7 @@ fun Route.createGigWorker(
             ) {
                 filePath?.let { File(it).delete() }
                 call.respond(
+                    HttpStatusCode.OK,
                     BasicApiResponse<Unit>(
                         successful = false,
                         message = ApiResponseMessages.USER_ALREADY_EXISTS

@@ -23,7 +23,7 @@ class GigProviderRepository(
     }
 
     override suspend fun getGigProviderByEmail(email: String): GigProvider? {
-        return gigProviders.findOneById(GigProvider::email eq email)
+        return gigProviders.findOne(GigProvider::email eq email)
     }
 
     override suspend fun updateGigProvider(
