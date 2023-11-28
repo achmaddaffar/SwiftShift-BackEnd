@@ -36,6 +36,12 @@ class GigService(
         )
     }
 
+    suspend fun getGigById(
+        gigId: String
+    ): Gig? {
+        return gigRepository.getGigById(gigId)
+    }
+
     suspend fun getNearbyGigs(
         request: GetNearbyGigsRequest,
         page: Int,

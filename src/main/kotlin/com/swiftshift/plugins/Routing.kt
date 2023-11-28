@@ -57,6 +57,9 @@ fun Application.configureRouting() {
         deleteReviewGigProvider(reviewService)
         getReviewGigProvider(reviewService)
 
+        // Applying
+        applyGig(applyingService, gigService)
+
         staticResources("", "static")
     }
 }
