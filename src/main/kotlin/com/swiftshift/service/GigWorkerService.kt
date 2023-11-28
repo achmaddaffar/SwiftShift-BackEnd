@@ -46,6 +46,10 @@ class GigWorkerService(
         return gigWorkerRepository.getGigWorkerByEmail(email)
     }
 
+    suspend fun getGigWorkerById(gigWorkerId: String): GigWorker? {
+        return gigWorkerRepository.getGigWorkerById(gigWorkerId)
+    }
+
     fun isValidPassword(enteredPassword: String, actualPassword: String): Boolean {
         return enteredPassword == actualPassword
     }

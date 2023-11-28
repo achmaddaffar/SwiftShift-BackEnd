@@ -20,7 +20,7 @@ fun Application.configureRouting() {
 
     routing {
         // Auth
-        authenticate()
+        authenticate(gigWorkerService, gigProviderService)
 
         // Gig Worker
         createGigWorker(

@@ -24,6 +24,9 @@ object Constants {
     const val GENDER_MALE = "Male"
     const val GENDER_FEMALE = "Female"
 
+    const val GIG_WORKER_ROLE = "gigWorker"
+    const val GIG_PROVIDER_ROLE = "gigProvider"
+
     const val JWT_CLAIM_GIG_WORKER_ID = "gigWorkerId"
     const val JWT_CLAIM_GIG_PROVIDER_ID = "gigProviderId"
 
