@@ -19,8 +19,8 @@ interface IGigRepository {
     ): List<Gig>
 
     suspend fun getNearbyGigs(
-        latitude: Long,
-        longitude: Long,
+        latitude: Double,
+        longitude: Double,
         page: Int = 0,
         pageSize: Int = Constants.DEFAULT_NEARBY_GIGS_PAGE_SIZE
     ): List<GigResponse>

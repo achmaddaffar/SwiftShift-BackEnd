@@ -14,8 +14,8 @@ data class Gig(
     val currentApplier: Int,
     val deadlineDate: Long,
     val salary: Double,
-    val latitude: Long,
-    val longitude: Long,
+    val latitude: Double,
+    val longitude: Double,
     val timestamp: Long,
     @BsonId
     val id: String = ObjectId().toString()

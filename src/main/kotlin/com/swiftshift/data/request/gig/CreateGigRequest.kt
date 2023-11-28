@@ -9,6 +9,6 @@ data class CreateGigRequest(
     val maxApplier: Int,
     val deadlineDate: Long,
     val salary: Double,
-    val latitude: Long,
-    val longitude: Long,
+    val latitude: Double,
+    val longitude: Double,
 )

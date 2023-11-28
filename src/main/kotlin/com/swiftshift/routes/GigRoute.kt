@@ -3,8 +3,10 @@ package com.swiftshift.routes
 import com.google.gson.Gson
 import com.swiftshift.data.request.gig.CreateGigRequest
 import com.swiftshift.data.response.BasicApiResponse
+import com.swiftshift.service.GigProviderService
 import com.swiftshift.service.GigService
 import com.swiftshift.util.Constants
+import com.swiftshift.util.QueryParams
 import com.swiftshift.util.gigProviderId
 import com.swiftshift.util.save
 import io.ktor.http.*
@@ -18,12 +20,18 @@ import org.koin.ktor.ext.inject
 import java.io.File
 
 fun Route.createGig(
-    gigService: GigService
+    gigService: GigService,
+    gigProviderService: GigProviderService
 ) {
     val gson by inject<Gson>()
 
     authenticate {
         post("/api/gig/create") {
+            if (gigProviderService.getGigProviderById(call.gigProviderId) == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+                return@post
+            }
+
             val multipart = call.receiveMultipart()
             var createGigRequest: CreateGigRequest? = null
             var fileName: String? = null
@@ -72,6 +80,70 @@ fun Route.createGig(
                 call.respond(HttpStatusCode.BadRequest)
                 return@post
             }
+        }
+    }
+}
+
+fun Route.getNearbyGigs(
+    gigService: GigService
+) {
+    authenticate {
+        get("/api/gig/get_nearby") {
+            val latitude = call.parameters[QueryParams.PARAM_LATITUDE]?.toDoubleOrNull()
+            val longitude = call.parameters[QueryParams.PARAM_LONGITUDE]?.toDoubleOrNull()
+
+            if (latitude == null || longitude == null) {
+                call.respond(HttpStatusCode.BadRequest)
+                return@get
+            }
+
+            val page = call.parameters[QueryParams.PARAM_PAGE]?.toIntOrNull() ?: 0
+            val pageSize =
+                call.parameters[QueryParams.PARAM_PAGE_SIZE]?.toIntOrNull() ?: Constants.DEFAULT_NEARBY_GIGS_PAGE_SIZE
+
+            val nearbyGigs = gigService.getNearbyGigs(
+                latitude = latitude,
+                longitude = longitude,
+                page = page,
+                pageSize = pageSize
+            )
+
+            call.respond(
+                HttpStatusCode.OK,
+                BasicApiResponse(
+                    successful = true,
+                    data = nearbyGigs
+                )
+            )
+        }
+    }
+}
+
+fun Route.getRecommendedGigs(
+    gigService: GigService
+) {
+    authenticate {
+        get("/api/gig/get_recommended") {
+            val latitude = call.parameters[QueryParams.PARAM_LATITUDE]?.toDoubleOrNull()
+            val longitude = call.parameters[QueryParams.PARAM_LONGITUDE]?.toDoubleOrNull()
+
+            if (latitude == null || longitude == null) {
+                call.respond(HttpStatusCode.BadRequest)
+                return@get
+            }
+
+            val recommendedGigs = gigService.getRecommendedGigs(
+                latitude = latitude,
+                longitude = longitude
+            )
+
+            call.respond(
+                HttpStatusCode.OK,
+                BasicApiResponse(
+                    successful = true,
+                    data = recommendedGigs
+                )
+            )
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.swiftshift.data.repository.gig
 
 import com.swiftshift.data.model.Gig
-import com.swiftshift.data.model.GigProvider
 import com.swiftshift.data.response.gig.GigResponse
+import com.swiftshift.data.util.DistanceUtil
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq
 import kotlin.math.abs
@@ -36,15 +36,21 @@ class GigRepository(
     }
 
     override suspend fun getNearbyGigs(
-        latitude: Long,
-        longitude: Long,
+        latitude: Double,
+        longitude: Double,
         page: Int,
         pageSize: Int
     ): List<GigResponse> {
+
         return gigs.find()
             .toList()
             .map {
-                val distance = abs(latitude - it.latitude) + abs(longitude - it.longitude)
+                val distance = DistanceUtil.distanceInKm(
+                    latitude,
+                    longitude,
+                    it.latitude,
+                    it.longitude
+                )
                 GigResponse(
                     title = it.title,
                     imageUrl = it.imageUrl,

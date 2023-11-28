@@ -8,4 +8,6 @@ object QueryParams {
     const val PARAM_QUERY = "query"
     const val PARAM_GIG_WORKER_ID = "gigWorkerId"
     const val PARAM_GIG_PROVIDER_ID = "gigProviderId"
+    const val PARAM_LATITUDE = "latitude"
+    const val PARAM_LONGITUDE = "longitude"
 }

@@ -19,6 +19,8 @@ fun Application.configureRouting() {
     val jwtSecret = environment.config.property("jwt.secret").getString()
 
     routing {
+        // Auth
+        authenticate()
 
         // Gig Worker
         createGigWorker(
@@ -50,7 +52,9 @@ fun Application.configureRouting() {
         )
 
         // Gig
-        createGig(gigService)
+        createGig(gigService, gigProviderService)
+        getNearbyGigs(gigService)
+        getRecommendedGigs(gigService)
 
         // Review
         createReviewGigProvider(reviewService)

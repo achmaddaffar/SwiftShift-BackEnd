@@ -3,8 +3,6 @@ package com.swiftshift.service
 import com.swiftshift.data.model.Gig
 import com.swiftshift.data.repository.gig.IGigRepository
 import com.swiftshift.data.request.gig.CreateGigRequest
-import com.swiftshift.data.request.gig.GetNearbyGigsRequest
-import com.swiftshift.data.request.gig.GetRecommendedGigsRequest
 import com.swiftshift.data.response.gig.GigResponse
 import com.swiftshift.util.Constants
 
@@ -43,24 +41,26 @@ class GigService(
     }
 
     suspend fun getNearbyGigs(
-        request: GetNearbyGigsRequest,
+        latitude: Double,
+        longitude: Double,
         page: Int,
         pageSize: Int = Constants.DEFAULT_NEARBY_GIGS_PAGE_SIZE
     ): List<GigResponse> {
         return gigRepository.getNearbyGigs(
-            latitude = request.latitude,
-            longitude = request.longitude,
+            latitude = latitude,
+            longitude = longitude,
             page = page,
             pageSize = pageSize
         )
     }
 
     suspend fun getRecommendedGigs(
-        request: GetRecommendedGigsRequest
+        latitude: Double,
+        longitude: Double
     ): List<GigResponse> {
         return gigRepository.getNearbyGigs(
-            latitude = request.latitude,
-            longitude = request.longitude,
+            latitude = latitude,
+            longitude = longitude,
             page = 0,
             pageSize = 3
         )

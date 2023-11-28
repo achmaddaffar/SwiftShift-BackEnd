@@ -11,9 +11,9 @@ data class GigResponse(
     val currentApplier: Int,
     val deadlineDate: Long,
     val salary: Double,
-    val longitude: Long,
-    val latitude: Long,
+    val longitude: Double,
+    val latitude: Double,
     val timestamp: Long,
-    val distance: Long,
+    val distance: Double,
     val id: String
 )
