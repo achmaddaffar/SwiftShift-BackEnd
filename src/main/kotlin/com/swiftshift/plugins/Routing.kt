@@ -33,7 +33,8 @@ fun Application.configureRouting() {
             jwtAudience = jwtAudience,
             jwtSecret = jwtSecret
         )
-        getGigWorkerProfile(gigWorkerService)
+        getGigWorkerProfileById(gigWorkerService)
+        getGigWorkerProfileByEmail(gigWorkerService)
         updateGigWorkerProfile(
             gigWorkerService = gigWorkerService,
             gigProviderService = gigProviderService

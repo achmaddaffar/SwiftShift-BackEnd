@@ -6,7 +6,6 @@ import com.swiftshift.data.request.gig_worker.CreateGigWorkerRequest
 import com.swiftshift.data.request.gig_worker.UpdateGigWorkerRequest
 import com.swiftshift.data.response.gig_worker.GigWorkerProfileResponse
 import com.swiftshift.util.Constants
-import java.util.regex.Pattern
 
 class GigWorkerService(
     private val gigWorkerRepository: IGigWorkerRepository
@@ -16,8 +15,22 @@ class GigWorkerService(
         return gigWorkerRepository.getGigWorkerByEmail(email) != null
     }
 
-    suspend fun getGigWorkerProfile(gigWorkerId: String): GigWorkerProfileResponse? {
+    suspend fun getGigWorkerProfileById(gigWorkerId: String): GigWorkerProfileResponse? {
         val gigWorker = gigWorkerRepository.getGigWorkerById(gigWorkerId) ?: return null
+        return GigWorkerProfileResponse(
+            fullName = gigWorker.fullName,
+            profileImageUrl = gigWorker.profileImageUrl.toString(),
+            joiningDate = gigWorker.timeStamp,
+            email = gigWorker.email,
+            totalIncome = gigWorker.totalIncome,
+            gender = gigWorker.gender,
+            highestEducation = gigWorker.highestEducation,
+            cvUrl = gigWorker.cvUrl
+        )
+    }
+
+    suspend fun getGigWorkerProfileByEmail(email: String): GigWorkerProfileResponse? {
+        val gigWorker = gigWorkerRepository.getGigWorkerByEmail(email) ?: return null
         return GigWorkerProfileResponse(
             fullName = gigWorker.fullName,
             profileImageUrl = gigWorker.profileImageUrl.toString(),

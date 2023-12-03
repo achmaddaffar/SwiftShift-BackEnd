@@ -8,6 +8,7 @@ import com.swiftshift.data.request.gig_worker.CreateGigWorkerRequest
 import com.swiftshift.data.request.gig_worker.UpdateGigWorkerRequest
 import com.swiftshift.data.response.BasicApiResponse
 import com.swiftshift.data.response.auth.AuthResponse
+import com.swiftshift.data.response.gig_worker.GigWorkerProfileResponse
 import com.swiftshift.service.GigProviderService
 import com.swiftshift.service.GigWorkerService
 import com.swiftshift.util.*
@@ -183,11 +184,11 @@ fun Route.loginGigWorker(
     }
 }
 
-fun Route.getGigWorkerProfile(
+fun Route.getGigWorkerProfileById(
     gigWorkerService: GigWorkerService
 ) {
     authenticate {
-        get("/api/gig_worker/profile") {
+        get("/api/gig_worker/profile_by_id") {
             val gigWorkerId = call.parameters[QueryParams.PARAM_GIG_WORKER_ID]
 
             if (gigWorkerId.isNullOrBlank()) {
@@ -195,7 +196,7 @@ fun Route.getGigWorkerProfile(
                 return@get
             }
 
-            val profileResponse = gigWorkerService.getGigWorkerProfile(gigWorkerId) ?: run {
+            val profileResponse = gigWorkerService.getGigWorkerProfileById(gigWorkerId) ?: run {
                 call.respond(
                     HttpStatusCode.OK,
                     BasicApiResponse<Unit>(
@@ -208,7 +209,44 @@ fun Route.getGigWorkerProfile(
 
             call.respond(
                 HttpStatusCode.OK,
-                profileResponse
+                BasicApiResponse(
+                    successful = true,
+                    data = profileResponse
+                )
+            )
+        }
+    }
+}
+
+fun Route.getGigWorkerProfileByEmail(
+    gigWorkerService: GigWorkerService
+) {
+    authenticate {
+        get("/api/gig_worker/profile_by_email") {
+            val email = call.parameters[QueryParams.PARAM_EMAIL]
+
+            if (email.isNullOrBlank()) {
+                call.respond(HttpStatusCode.BadRequest)
+                return@get
+            }
+
+            val profileResponse = gigWorkerService.getGigWorkerProfileByEmail(email) ?: run {
+                call.respond(
+                    HttpStatusCode.OK,
+                    BasicApiResponse<Unit>(
+                        successful = false,
+                        message = ApiResponseMessages.USER_NOT_FOUND
+                    )
+                )
+                return@get
+            }
+
+            call.respond(
+                HttpStatusCode.OK,
+                BasicApiResponse(
+                    successful = true,
+                    data = profileResponse
+                )
             )
         }
     }

@@ -6,7 +6,7 @@ import org.koin.dsl.module
 val serviceModule = module {
     single { GigWorkerService(get()) }
     single { GigProviderService(get()) }
-    single { GigService(get()) }
+    single { GigService(get(), get()) }
     single { ReviewService(get()) }
     single { ApplyingService(get()) }
 }

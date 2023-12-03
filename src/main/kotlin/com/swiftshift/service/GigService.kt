@@ -2,12 +2,14 @@ package com.swiftshift.service
 
 import com.swiftshift.data.model.Gig
 import com.swiftshift.data.repository.gig.IGigRepository
+import com.swiftshift.data.repository.gig_provider.IGigProviderRepository
 import com.swiftshift.data.request.gig.CreateGigRequest
 import com.swiftshift.data.response.gig.GigResponse
 import com.swiftshift.util.Constants
 
 class GigService(
-    private val gigRepository: IGigRepository
+    private val gigRepository: IGigRepository,
+    private val gigProviderRepository: IGigProviderRepository
 ) {
 
     suspend fun createGig(
@@ -15,6 +17,8 @@ class GigService(
         imageUrl: String,
         gigProviderId: String
     ): Boolean {
+        val gigProvider = gigProviderRepository.getGigProviderById(gigProviderId) ?: return false
+
         return gigRepository.createGig(
             Gig(
                 title = request.title,
@@ -22,7 +26,7 @@ class GigService(
                 description = request.description,
                 tag = request.tag,
                 gigProviderId = gigProviderId,
-                gigProviderName = request.gigProviderName,
+                gigProviderName = gigProvider.fullName,
                 maxApplier = request.maxApplier,
                 currentApplier = 0,
                 deadlineDate = request.deadlineDate,

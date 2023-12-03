@@ -5,7 +5,6 @@ data class CreateGigRequest(
     val description: String,
     val tag: String,
     val gigProviderId: String,
-    val gigProviderName: String,
     val maxApplier: Int,
     val deadlineDate: Long,
     val salary: Double,

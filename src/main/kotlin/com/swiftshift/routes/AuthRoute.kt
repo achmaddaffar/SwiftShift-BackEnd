@@ -39,7 +39,7 @@ fun Route.authenticate(
                 )
                 return@get
             }
-            
+
             call.respond(HttpStatusCode.NotFound)
         }
     }
