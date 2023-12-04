@@ -45,7 +45,7 @@ class GigRepository(
         return gigs.find()
             .toList()
             .map {
-                val distance = DistanceUtil.distanceInKm(
+                val distance = DistanceUtil.haversine(
                     latitude,
                     longitude,
                     it.latitude,

@@ -2,10 +2,13 @@ package com.swiftshift.util
 
 object Constants {
 
+    const val CLIENT_CONNECTION_STRING = "mongodb://mongodb:27017"
     const val DATABASE_NAME = "SwiftShift_Database"
-    const val BASE_URL = "http://10.0.2.2:8005/"
+    const val BASE_URL = "http://localhost:8080/"
     const val PROFILE_PICTURE_PATH = "build/resources/main/static/profile_pictures/"
+//    const val PROFILE_PICTURE_PATH = "serverdog/profile_pictures/"
     const val GIG_IMAGE_PATH = "build/resources/main/static/gig_images/"
+//    const val GIG_IMAGE_PATH = "serverdog/gig_images/"
 
     const val CREATE_ACCOUNT_PART_DATA = "create_account_data"
     const val UPDATE_PROFILE_PART_DATA = "update_profile_data"

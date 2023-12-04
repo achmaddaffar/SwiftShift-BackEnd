@@ -1,30 +1,24 @@
 package com.swiftshift.data.util
 
-import kotlin.math.acos
-import kotlin.math.cos
-import kotlin.math.sin
+import kotlin.math.*
 
 object DistanceUtil {
 
-    fun distanceInKm(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        return distanceInMiles(lat1, lon1, lat2, lon2) / 0.62137
-    }
+    private const val earthRadiusKm: Double = 6372.8
 
-    fun distanceInMiles(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        val theta = lon1 - lon2
-        var dist =
-            sin(deg2rad(lat1)) * sin(deg2rad(lat2)) + cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta))
-        dist = acos(dist)
-        dist = rad2deg(dist)
-        dist *= 60 * 1.1515
-        return dist
-    }
+    fun haversine(
+        lat1: Double,
+        lon1: Double,
+        lat2: Double,
+        lon2: Double
+    ): Double {
+        val dLat = Math.toRadians(lat2 - lat1)
+        val dLon = Math.toRadians(lon2 - lon1)
+        val originLat = Math.toRadians(lat1)
+        val destinationLat = Math.toRadians(lat2)
 
-    private fun deg2rad(deg: Double): Double {
-        return deg * Math.PI / 180.0
-    }
-
-    private fun rad2deg(rad: Double): Double {
-        return rad * 180.0 / Math.PI
+        val a = sin(dLat / 2).pow(2.toDouble()) + sin(dLon / 2).pow(2.toDouble()) * cos(originLat) * cos(destinationLat)
+        val c = 2 * asin(sqrt(a))
+        return earthRadiusKm * c
     }
 }

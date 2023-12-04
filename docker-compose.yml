@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+
+  mongodb:
+    image: mongo:latest
+    platform: linux/amd64
+    restart: always
+    container_name: mongodb-container
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb:/data/db
+
+  ktor:
+    build: .
+    image: oliverroot/swiftshift-main
+    platform: linux/amd64
+    restart: always
+    container_name: swiftshift-main-container
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      MONGODB_HOST: mongodb
+      MONGODB_URI: mongodb://mongodb:27017
+    depends_on:
+      - mongodb
+    volumes:
+      - ktor:/data/files
+      - ktor-serverdog:/serverdog/profile_pictures
+      - ktor-serverdog:/serverdog/gig_images
+
+volumes:
+  mongodb: {}
+  ktor: {}
+  ktor-serverdog: {}

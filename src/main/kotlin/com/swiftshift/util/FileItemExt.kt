@@ -13,3 +13,13 @@ fun PartData.FileItem.save(path: String): String {
     File("$path$fileName").writeBytes(fileBytes)
     return fileName
 }
+
+//fun PartData.FileItem.save(path: String, id: String): String {
+//    val fileBytes = streamProvider().readBytes()
+//    val fileExtension = originalFileName?.takeLastWhile { it != '.' }
+//    val fileName = "$id.$fileExtension"
+//    val folder = File(path)
+//    folder.mkdirs()
+//    File("$path$fileName").writeBytes(fileBytes)
+//    return fileName
+//}

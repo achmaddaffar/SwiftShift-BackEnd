@@ -81,3 +81,11 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.2")
     testImplementation("io.mockk:mockk:1.9.3")
 }
+
+tasks {
+    shadowJar {
+        manifest {
+            attributes(Pair("Main-Class", "com.swiftshift.ApplicationKt"))
+        }
+    }
+}
