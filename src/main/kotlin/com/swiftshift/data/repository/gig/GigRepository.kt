@@ -1,10 +1,13 @@
 package com.swiftshift.data.repository.gig
 
 import com.swiftshift.data.model.Gig
+import com.swiftshift.data.model.GigWorker
 import com.swiftshift.data.response.gig.GigResponse
 import com.swiftshift.data.util.DistanceUtil
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq
+import org.litote.kmongo.or
+import org.litote.kmongo.regex
 import kotlin.math.abs
 
 class GigRepository(
@@ -72,5 +75,16 @@ class GigRepository(
             .sortedBy { it.distance }
             .drop(page * pageSize)
             .take(pageSize)
+    }
+
+    override suspend fun searchGig(query: String): List<Gig> {
+        return gigs.find(
+            or(
+                Gig::title regex Regex("(?i).*$query.*"),
+                Gig::gigProviderName eq query
+            )
+        )
+            .ascendingSort(Gig::title)
+            .toList()
     }
 }

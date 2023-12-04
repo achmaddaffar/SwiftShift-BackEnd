@@ -69,4 +69,8 @@ class GigService(
             pageSize = 3
         )
     }
+
+    suspend fun searchGig(query: String): List<Gig> {
+        return gigRepository.searchGig(query)
+    }
 }

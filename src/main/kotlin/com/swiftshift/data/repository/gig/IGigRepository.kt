@@ -24,4 +24,6 @@ interface IGigRepository {
         page: Int = 0,
         pageSize: Int = Constants.DEFAULT_NEARBY_GIGS_PAGE_SIZE
     ): List<GigResponse>
+
+    suspend fun searchGig(query: String): List<Gig>
 }

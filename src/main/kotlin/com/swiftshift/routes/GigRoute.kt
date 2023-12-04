@@ -1,11 +1,13 @@
 package com.swiftshift.routes
 
 import com.google.gson.Gson
+import com.swiftshift.data.model.Gig
 import com.swiftshift.data.request.gig.CreateGigRequest
 import com.swiftshift.data.response.BasicApiResponse
 import com.swiftshift.service.GigProviderService
 import com.swiftshift.service.GigService
 import com.swiftshift.util.Constants
+import com.swiftshift.util.Constants.Empty
 import com.swiftshift.util.QueryParams
 import com.swiftshift.util.gigProviderId
 import com.swiftshift.util.save
@@ -142,6 +144,35 @@ fun Route.getRecommendedGigs(
                 BasicApiResponse(
                     successful = true,
                     data = recommendedGigs
+                )
+            )
+        }
+    }
+}
+
+fun Route.searchGig(
+    gigService: GigService
+) {
+    authenticate {
+        get("/api/gig/search") {
+            val query = call.parameters[QueryParams.PARAM_QUERY] ?: run {
+                call.respond(
+                    HttpStatusCode.OK,
+                    BasicApiResponse(
+                        successful = true,
+                        data = emptyList<Gig>()
+                    )
+                )
+                return@get
+            }
+
+            val gigs = gigService.searchGig(query)
+
+            call.respond(
+                HttpStatusCode.OK,
+                BasicApiResponse(
+                    successful = true,
+                    data = gigs
                 )
             )
         }
