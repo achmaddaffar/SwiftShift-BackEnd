@@ -4,8 +4,8 @@ object Constants {
 
     const val CLIENT_CONNECTION_STRING = "mongodb://mongodb:27017"
     const val DATABASE_NAME = "SwiftShift_Database"
-//    const val BASE_URL = "http://3.229.102.242:8080/"
-    const val BASE_URL = "http://localhost:8080/"
+    const val BASE_URL = "http://3.229.102.242:8080/"
+//    const val BASE_URL = "http://localhost:8080/"
     const val PROFILE_PICTURE_PATH = "build/resources/main/static/profile_pictures/"
 //    const val PROFILE_PICTURE_PATH = "serverdog/profile_pictures/"
     const val GIG_IMAGE_PATH = "build/resources/main/static/gig_images/"
