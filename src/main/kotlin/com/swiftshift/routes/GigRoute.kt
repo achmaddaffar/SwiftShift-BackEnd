@@ -7,7 +7,6 @@ import com.swiftshift.data.response.BasicApiResponse
 import com.swiftshift.service.GigProviderService
 import com.swiftshift.service.GigService
 import com.swiftshift.util.Constants
-import com.swiftshift.util.Constants.Empty
 import com.swiftshift.util.QueryParams
 import com.swiftshift.util.gigProviderId
 import com.swiftshift.util.save
@@ -173,6 +172,32 @@ fun Route.searchGig(
                 BasicApiResponse(
                     successful = true,
                     data = gigs
+                )
+            )
+        }
+    }
+}
+
+fun Route.getGigById(
+    gigService: GigService
+) {
+    authenticate {
+        get("/api/gig/detail") {
+            val gigId = call.parameters[QueryParams.PARAM_GIG_ID] ?: run {
+                call.respond(HttpStatusCode.BadRequest)
+                return@get
+            }
+
+            val gig = gigService.getGigById(gigId) ?: run {
+                call.respond(HttpStatusCode.InternalServerError)
+                return@get
+            }
+
+            call.respond(
+                HttpStatusCode.OK,
+                BasicApiResponse(
+                    successful = true,
+                    data = gig
                 )
             )
         }

@@ -57,6 +57,7 @@ fun Application.configureRouting() {
         getNearbyGigs(gigService)
         getRecommendedGigs(gigService)
         searchGig(gigService)
+        getGigById(gigService)
 
         // Review
         createReviewGigProvider(reviewService)
