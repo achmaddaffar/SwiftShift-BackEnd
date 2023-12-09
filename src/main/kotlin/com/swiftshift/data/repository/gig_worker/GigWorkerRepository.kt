@@ -38,7 +38,7 @@ class GigWorkerRepository(
                 email = request.email,
                 fullName = request.fullName,
                 password = request.password,
-                timeStamp = System.currentTimeMillis(),
+                timestamp = System.currentTimeMillis(),
                 profileImageUrl = profileImageUrl,
                 totalIncome = request.totalIncome,
                 gender = request.gender,

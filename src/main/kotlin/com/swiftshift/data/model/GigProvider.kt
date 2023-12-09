@@ -1,6 +1,5 @@
 package com.swiftshift.data.model
 
-import com.swiftshift.util.Constants.Empty
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.types.ObjectId
 

@@ -196,7 +196,7 @@ fun Route.getGigProviderProfileById(
                 return@get
             }
 
-            val profileResponse = gigProviderService.getGigProviderById(gigProviderId) ?: run {
+            val profileResponse = gigProviderService.getGigProviderProfileById(gigProviderId) ?: run {
                 call.respond(
                     HttpStatusCode.OK,
                     BasicApiResponse<Unit>(
@@ -228,7 +228,7 @@ fun Route.getGigProviderProfileByEmail(
                 return@get
             }
 
-            val profileResponse = gigProviderService.getGigProviderByEmail(email) ?: run {
+            val profileResponse = gigProviderService.getGigProviderProfileByEmail(email) ?: run {
                 call.respond(
                     HttpStatusCode.OK,
                     BasicApiResponse<Unit>(
@@ -236,6 +236,7 @@ fun Route.getGigProviderProfileByEmail(
                         message = ApiResponseMessages.USER_NOT_FOUND
                     )
                 )
+                return@get
             }
 
             call.respond(

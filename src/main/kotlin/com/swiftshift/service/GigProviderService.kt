@@ -3,6 +3,7 @@ package com.swiftshift.service
 import com.swiftshift.data.model.GigProvider
 import com.swiftshift.data.repository.gig_provider.IGigProviderRepository
 import com.swiftshift.data.request.gig_provider.CreateGigProviderRequest
+import com.swiftshift.data.response.gig_provider.GigProviderProfileResponse
 import com.swiftshift.util.Constants
 
 class GigProviderService(
@@ -11,6 +12,34 @@ class GigProviderService(
 
     suspend fun doesGigProviderWithEmailExist(email: String): Boolean {
         return gigProviderRepository.getGigProviderByEmail(email) != null
+    }
+
+    suspend fun getGigProviderProfileByEmail(email: String): GigProviderProfileResponse? {
+        val gigProvider = gigProviderRepository.getGigProviderByEmail(email) ?: return null
+        return GigProviderProfileResponse(
+            fullName = gigProvider.fullName,
+            profileImageUrl = gigProvider.profileImageUrl.toString(),
+            joiningDate = gigProvider.timestamp,
+            email = gigProvider.email,
+            totalIncome = gigProvider.totalIncome,
+            gender = gigProvider.gender,
+            highestEducation = gigProvider.highestEducation,
+            cvUrl = gigProvider.cvUrl
+        )
+    }
+
+    suspend fun getGigProviderProfileById(gigProviderId: String): GigProviderProfileResponse? {
+        val gigProvider = gigProviderRepository.getGigProviderById(gigProviderId) ?: return null
+        return GigProviderProfileResponse(
+            fullName = gigProvider.fullName,
+            profileImageUrl = gigProvider.profileImageUrl.toString(),
+            joiningDate = gigProvider.timestamp,
+            email = gigProvider.email,
+            totalIncome = gigProvider.totalIncome,
+            gender = gigProvider.gender,
+            highestEducation = gigProvider.highestEducation,
+            cvUrl = gigProvider.cvUrl
+        )
     }
 
     suspend fun getGigProviderByEmail(email: String): GigProvider? {

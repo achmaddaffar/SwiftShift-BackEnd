@@ -31,7 +31,7 @@ class FakeGigWorkerRepository : IGigWorkerRepository {
             fullName = request.fullName,
             email = request.email,
             password = request.email,
-            timeStamp = gigWorker.timeStamp,
+            timestamp = gigWorker.timestamp,
             profileImageUrl = profileImageUrl,
             totalIncome = request.totalIncome,
             gender = request.gender,

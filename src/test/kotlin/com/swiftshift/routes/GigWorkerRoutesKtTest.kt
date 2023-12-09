@@ -2,16 +2,12 @@ package com.swiftshift.routes
 
 import com.google.gson.Gson
 import com.swiftshift.data.model.GigWorker
-import com.swiftshift.data.response.BasicApiResponse
 import com.swiftshift.plugins.configureRouting
 import com.swiftshift.repository.FakeGigWorkerRepository
 import com.swiftshift.util.Constants
-import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
-import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.server.application.*
 import io.ktor.server.config.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
@@ -20,7 +16,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import org.litote.kmongo.json
 import kotlin.test.assertEquals
 
 @RunWith(JUnit4::class)
@@ -49,7 +44,7 @@ internal class GigWorkerRoutesKtTest : KoinTest {
                     fullName = "test",
                     email = "test@gmail.com",
                     password = "1234",
-                    timeStamp = System.currentTimeMillis()
+                    timestamp = System.currentTimeMillis()
                 )
             )
         }
@@ -65,7 +60,7 @@ internal class GigWorkerRoutesKtTest : KoinTest {
                     fullName = "test",
                     email = "test@gmail.com",
                     password = "1234",
-                    timeStamp = System.currentTimeMillis()
+                    timestamp = System.currentTimeMillis()
                 )
             )
         }

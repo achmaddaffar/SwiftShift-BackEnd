@@ -20,7 +20,7 @@ class GigWorkerService(
         return GigWorkerProfileResponse(
             fullName = gigWorker.fullName,
             profileImageUrl = gigWorker.profileImageUrl.toString(),
-            joiningDate = gigWorker.timeStamp,
+            joiningDate = gigWorker.timestamp,
             email = gigWorker.email,
             totalIncome = gigWorker.totalIncome,
             gender = gigWorker.gender,
@@ -34,7 +34,7 @@ class GigWorkerService(
         return GigWorkerProfileResponse(
             fullName = gigWorker.fullName,
             profileImageUrl = gigWorker.profileImageUrl.toString(),
-            joiningDate = gigWorker.timeStamp,
+            joiningDate = gigWorker.timestamp,
             email = gigWorker.email,
             totalIncome = gigWorker.totalIncome,
             gender = gigWorker.gender,
@@ -76,7 +76,7 @@ class GigWorkerService(
                 fullName = request.fullName,
                 email = request.email,
                 password = request.password,
-                timeStamp = System.currentTimeMillis(),
+                timestamp = System.currentTimeMillis(),
                 profileImageUrl = profileImageUrl
             )
         )
