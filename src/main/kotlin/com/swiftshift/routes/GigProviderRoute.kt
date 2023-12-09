@@ -7,15 +7,18 @@ import com.swiftshift.data.request.LoginRequest
 import com.swiftshift.data.request.gig_provider.CreateGigProviderRequest
 import com.swiftshift.data.response.BasicApiResponse
 import com.swiftshift.data.response.auth.AuthResponse
+import com.swiftshift.routes.authenticate
 import com.swiftshift.service.GigProviderService
 import com.swiftshift.service.GigWorkerService
 import com.swiftshift.util.ApiResponseMessages
 import com.swiftshift.util.Constants
 import com.swiftshift.util.Constants.Empty
+import com.swiftshift.util.QueryParams
 import com.swiftshift.util.save
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -182,3 +185,67 @@ fun Route.loginGigProvider(
         }
     }
 }
+
+fun Route.getGigProviderProfileById(
+    gigProviderService: GigProviderService
+) {
+    authenticate {
+        get("/api/gig_provider/profile_by_id") {
+            val gigProviderId = call.parameters[QueryParams.PARAM_GIG_PROVIDER_ID] ?: run {
+                call.respond(HttpStatusCode.BadRequest)
+                return@get
+            }
+
+            val profileResponse = gigProviderService.getGigProviderById(gigProviderId) ?: run {
+                call.respond(
+                    HttpStatusCode.OK,
+                    BasicApiResponse<Unit>(
+                        successful = false,
+                        message = ApiResponseMessages.USER_NOT_FOUND
+                    )
+                )
+                return@get
+            }
+
+            call.respond(
+                HttpStatusCode.OK,
+                BasicApiResponse(
+                    successful = true,
+                    data = profileResponse
+                )
+            )
+        }
+    }
+}
+
+fun Route.getGigProviderProfileByEmail(
+    gigProviderService: GigProviderService
+) {
+    authenticate {
+        get("/api/gig_provider/profile_by_email") {
+            val email = call.parameters[QueryParams.PARAM_EMAIL] ?: run {
+                call.respond(HttpStatusCode.BadRequest)
+                return@get
+            }
+
+            val profileResponse = gigProviderService.getGigProviderByEmail(email) ?: run {
+                call.respond(
+                    HttpStatusCode.OK,
+                    BasicApiResponse<Unit>(
+                        successful = false,
+                        message = ApiResponseMessages.USER_NOT_FOUND
+                    )
+                )
+            }
+
+            call.respond(
+                HttpStatusCode.OK,
+                BasicApiResponse(
+                    successful = true,
+                    data = profileResponse
+                )
+            )
+        }
+    }
+}
+

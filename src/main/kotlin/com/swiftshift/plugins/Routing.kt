@@ -51,6 +51,8 @@ fun Application.configureRouting() {
             jwtAudience = jwtAudience,
             jwtSecret = jwtSecret
         )
+        getGigProviderProfileById(gigProviderService)
+        getGigProviderProfileByEmail(gigProviderService)
 
         // Gig
         createGig(gigService, gigProviderService)
