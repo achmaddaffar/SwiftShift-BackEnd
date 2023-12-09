@@ -1,14 +1,12 @@
 package com.swiftshift.data.repository.gig
 
 import com.swiftshift.data.model.Gig
-import com.swiftshift.data.model.GigWorker
 import com.swiftshift.data.response.gig.GigResponse
 import com.swiftshift.data.util.DistanceUtil
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq
 import org.litote.kmongo.or
 import org.litote.kmongo.regex
-import kotlin.math.abs
 
 class GigRepository(
     db: CoroutineDatabase
